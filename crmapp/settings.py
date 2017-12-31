@@ -33,15 +33,14 @@ def get_env_variable(var_name):
 ENV_ROLE = get_env_variable('ENV_ROLE')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'i(su@1^5706frx^kpubg@xq__)^fb1s_g66w$yx8n#oxo(js-p'
+SECRET_KEY = get_env_variable('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
+CRMEASY_DB_PASS = False
 if ENV_ROLE == 'development':
-    DEBUG = True
-    TEMPLATES = [{
-        'DEBUG': True
-    }]
+    DEBUG = True,
+    CRMEASY_DB_PASS = get_env_variable('CRMEASY_DB_PASS')
 
 ALLOWED_HOSTS = []
 
@@ -74,7 +73,6 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
-        'DEBUG': False,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -96,6 +94,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'PASSWORD': CRMEASY_DB_PASS,
     }
 }
 
