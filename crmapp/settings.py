@@ -39,6 +39,10 @@ SECRET_KEY = get_env_variable('SECRET_KEY')
 DEBUG = False
 CRMEASY_DB_PASS = False
 if ENV_ROLE == 'development':
+    SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
+    STATICFILES_DIRS = (
+        os.path.join(SITE_ROOT, 'static/'),
+    )
     DEBUG = True,
     CRMEASY_DB_PASS = get_env_variable('CRMEASY_DB_PASS')
 
@@ -144,13 +148,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = 'd:/GitHub/ultimatedjango/crmapp/static'
+STATIC_ROOT = 'staticfiles'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
-)
-SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
-STATICFILES_DIRS = (
-  os.path.join(SITE_ROOT, 'static/'),
 )
 
 # Parse database configuration from $DATABASE_URL
