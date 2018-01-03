@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path
 from marketing.views import HomePage
+from subscribers import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,7 +25,7 @@ urlpatterns = [
     re_path(r'^$', HomePage.as_view(), name="home"),
 
     # Subscriber related URLs
-
+    re_path(r'^signup/$', views.subscriber_new, name='sub_new'),
 
     # Admin URL
 
