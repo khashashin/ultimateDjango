@@ -19,8 +19,6 @@ from marketing.views import HomePage
 from subscribers import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-
     # Marketing pages
     re_path(r'^$', HomePage.as_view(), name="home"),
 
@@ -28,6 +26,7 @@ urlpatterns = [
     re_path(r'^signup/$', views.subscriber_new, name='sub_new'),
 
     # Admin URL
+    path('admin/', admin.site.urls),
 
 
     # Login/Logout URLs
