@@ -154,4 +154,3 @@ STATICFILES_DIRS = (
 if ENV_ROLE == 'production':
     import dj_database_url
     DATABASES['default'] =  dj_database_url.config()
-    STATIC_URL = 'static/'
