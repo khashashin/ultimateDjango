@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.forms.forms import NON_FIELD_ERRORS
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from .forms import SubscriberForm
 from .models import Subscriber
