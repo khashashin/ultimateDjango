@@ -6,7 +6,7 @@ from .models import Subscriber
 class AddressMixin(forms.ModelForm):
     class Meta:
         model = Subscriber
-        fields = ('address_one', 'address_two', 'city', 'state',)
+        fields = ('address_one', 'address_two', 'city', 'state')
         widgets = {
             'address_one': forms.TextInput(attrs={'class':'form-control'}),
             'address_two': forms.TextInput(attrs={'class':'form-control'}),
