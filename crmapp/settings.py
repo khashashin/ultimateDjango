@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'django_heroku',
     'marketing',
     'subscribers',
+    'accounts',
 ]
 
 MIDDLEWARE = [
