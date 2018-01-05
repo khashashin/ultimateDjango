@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, re_path
 from marketing.views import HomePage
 from subscribers import views
+from django.contrib.auth import views as django_views
 
 urlpatterns = [
     # Marketing pages
@@ -31,10 +32,10 @@ urlpatterns = [
 
     # Login/Logout URLs
     re_path(r'^login/$',
-    'django.contrib.auth.views.login', {'template_name': 'login.html'}
+        django_views.login, {'template_name':'login.html'}, name="login"
     ),
     re_path(r'^logout/$',
-        'django.contrib.auth.views.logout', {'next_page': '/login/'}
+        django_views.logout, {'next_page': '/login/'}
     ),
 
 
