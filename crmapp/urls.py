@@ -30,10 +30,10 @@ urlpatterns = [
 
 
     # Login/Logout URLs
-    (r'^login/$',
+    re_path(r'^login/$',
     'django.contrib.auth.views.login', {'template_name': 'login.html'}
     ),
-    (r'^logout/$',
+    re_path(r'^logout/$',
         'django.contrib.auth.views.logout', {'next_page': '/login/'}
     ),
 
