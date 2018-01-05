@@ -18,6 +18,7 @@ from django.urls import path, re_path
 from marketing.views import HomePage
 from subscribers import views
 from django.contrib.auth import views as django_views
+from accounts.views import AccountList
 
 urlpatterns = [
     # Marketing pages
@@ -40,6 +41,9 @@ urlpatterns = [
 
 
     # Account related URLs
+    re_path(r'^account/list/$',
+        AccountList.as_view(), name='account_list'
+    ),
 
 
     # Contact related URLS
