@@ -14,18 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, re_path
-from marketing.views import HomePage
-from subscribers import views
+from django.urls import path, re_path, include
+from marketing import views as marketing_views
+from subscribers import views as subscr_views
 from django.contrib.auth import views as django_views
-from accounts.views import AccountList
+from accounts import views as account_views
+from accounts import urls as account_urls
 
 urlpatterns = [
     # Marketing pages
-    re_path(r'^$', HomePage.as_view(), name="home"),
+    re_path(r'^$', marketing_views.HomePage.as_view(), name="home"),
 
     # Subscriber related URLs
-    re_path(r'^signup/$', views.subscriber_new, name='sub_new'),
+    re_path(r'^signup/$', subscr_views.subscriber_new, name='sub_new'),
 
     # Admin URL
     path('admin/', admin.site.urls),
@@ -42,9 +43,9 @@ urlpatterns = [
 
     # Account related URLs
     re_path(r'^account/list/$',
-        AccountList.as_view(), name='account_list'
+        account_views.AccountList.as_view(), name='account_list'
     ),
-
+    re_path(r'^account/(?P<uuid>[\w-]+)/', include(account_urls)),
 
     # Contact related URLS
 
