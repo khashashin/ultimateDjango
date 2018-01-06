@@ -18,7 +18,7 @@ from django.urls import path, re_path, include
 from marketing import views as marketing_views
 from subscribers import views as subscr_views
 from django.contrib.auth import views as django_views
-from accounts import views as account_views
+from accounts.views import AccountList as account_views
 from accounts import urls as account_urls
 
 urlpatterns = [
@@ -43,10 +43,12 @@ urlpatterns = [
 
     # Account related URLs
     re_path(r'^account/list/$',
-        account_views.AccountList.as_view(), name='account_list'
+        account_views.as_view(), name='account_list'
     ),
     re_path(r'^account/(?P<uuid>[\w-]+)/', include(account_urls)),
-
+    re_path(r'^account/new/$',
+        account_views.account_cru, name='account_new'
+    ),
     # Contact related URLS
 
 
