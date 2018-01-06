@@ -45,7 +45,7 @@ urlpatterns = [
     re_path(r'^account/list/$', account_views.as_view(), name='account_list'),
     re_path(r'^account/(?P<uuid>[\w-]+)/', include('accounts.urls')),
     # Contact related URLS
-
+    re_path(r'^contact/(?P<uuid>[\w-]+)/', include('contacts.urls')),
 
     # Communication related URLs
 ]
