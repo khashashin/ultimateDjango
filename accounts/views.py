@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404
 
 from .models import Account
 from .forms import AccountForm
+from contacts.models import Contact
 
 # Create your views here.
 class AccountList(ListView):
@@ -40,8 +41,12 @@ def account_detail(request, uuid):
     account = Account.objects.get(uuid=uuid)
     if account.owner != request.user:
             return HttpResponseForbidden()
+
+    contacts = Contact.objects.filter(account=account)
+
     variables = {
         'account': account,
+        'contacts': contacts,
     }
 
     return render(request, 'accounts/account_detail.html', variables)
