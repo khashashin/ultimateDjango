@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import Account
+from .forms import AccountForm
 
 # Create your views here.
 class AccountList(ListView):
@@ -54,7 +55,7 @@ def account_cru(request):
             account.owner = request.user
             account.save()
             redirect_url = reverse(
-                'accounts.views.account_detail',
+                'account_detail',
                 args=(account.uuid,)
             )
             return HttpResponseRedirect(redirect_url)
