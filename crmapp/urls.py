@@ -19,8 +19,7 @@ from marketing import views as marketing_views
 from subscribers import views as subscr_views
 from django.contrib.auth import views as django_views
 from accounts.views import AccountList as account_views
-from accounts import urls as account_urls
-
+from accounts.views import account_cru
 urlpatterns = [
     # Marketing pages
     re_path(r'^$', marketing_views.HomePage.as_view(), name="home"),
@@ -42,13 +41,9 @@ urlpatterns = [
 
 
     # Account related URLs
-    re_path(r'^account/list/$',
-        account_views.as_view(), name='account_list'
-    ),
-    re_path(r'^account/(?P<uuid>[\w-]+)/', include(account_urls)),
-    re_path(r'^account/new/$',
-        account_views.account_cru, name='account_new'
-    ),
+    re_path(r'^account/new/$', account_cru, name='account_new'),
+    re_path(r'^account/list/$', account_views.as_view(), name='account_list'),
+    re_path(r'^account/(?P<uuid>[\w-]+)/', include('accounts.urls')),
     # Contact related URLS
 
 
