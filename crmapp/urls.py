@@ -21,6 +21,7 @@ from django.contrib.auth import views as django_views
 from accounts.views import AccountList as account_views
 from accounts.views import account_cru
 from contacts.views import contact_cru, ContactDelete
+from communications.views import comm_cru
 
 
 urlpatterns = [
@@ -54,4 +55,5 @@ urlpatterns = [
     re_path(r'^contact/(?P<pk>[\w-]+)/delete/$', ContactDelete.as_view(), name='contact_delete'),
     # Communication related URLs
     re_path(r'^comm/(?P<uuid>[\w-]+)/', include('communications.urls')),
+    re_path(r'^comm/new/$', comm_cru, name='comm_new'),
 ]
