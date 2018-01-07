@@ -20,7 +20,7 @@ from subscribers import views as subscr_views
 from django.contrib.auth import views as django_views
 from accounts.views import AccountList as account_views
 from accounts.views import account_cru
-from contacts.views import contact_cru
+from contacts.views import contact_cru, ContactDelete
 
 
 urlpatterns = [
@@ -47,8 +47,10 @@ urlpatterns = [
     re_path(r'^account/new/$', account_cru, name='account_new'),
     re_path(r'^account/list/$', account_views.as_view(), name='account_list'),
     re_path(r'^account/(?P<uuid>[\w-]+)/', include('accounts.urls')),
+
     # Contact related URLS
     re_path(r'^contact/(?P<uuid>[\w-]+)/', include('contacts.urls')),
     re_path(r'^contact/new/$', contact_cru, name='contact_new'),
+    re_path(r'^contact/(?P<pk>[\w-]+)/delete/$', ContactDelete.as_view(), name='contact_delete'),
     # Communication related URLs
 ]
