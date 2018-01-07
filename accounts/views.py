@@ -68,10 +68,7 @@ def account_cru(request, uuid=None):
             account = form.save(commit=False)
             account.owner = request.user
             account.save()
-            redirect_url = reverse(
-                account_detail,
-                args=(account.uuid,)
-            )
+            redirect_url = reverse('account_detail', args=(account.uuid,))
             return HttpResponseRedirect(redirect_url)
     else:
         form = AccountForm(instance=account)

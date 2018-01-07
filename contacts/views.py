@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic.edit import DeleteView
 
 from accounts.models import Account
+from accounts.views import account_detail
 
 from .models import Contact
 from .forms import ContactForm
@@ -51,7 +52,7 @@ def contact_cru(request, uuid=None, account=None):
                 )
             else:
                 reverse_url = reverse(
-                    accounts.views.account_detail,
+                    account_detail,
                     args=(account.uuid,)
                 )
                 return HttpResponseRedirect(reverse_url)
@@ -98,6 +99,6 @@ class ContactDelete(ContactMixin, DeleteView):
 
     def get_success_url(self):
         return reverse(
-            accounts.views.account_detail,
+            account_detail,
             args=(self.account.uuid,)
         )
