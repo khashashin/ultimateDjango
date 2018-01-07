@@ -32,7 +32,6 @@ def contact_cru(request, uuid=None, account=None):
 
     if request.POST:
         form = ContactForm(request.POST, instance=contact)
-        form = ContactForm(request.POST)
         if form.is_valid():
             # make sure the user owns the account
             account = form.cleaned_data['account']
@@ -43,21 +42,22 @@ def contact_cru(request, uuid=None, account=None):
             contact.owner = request.user
             contact.save()
             # return the user to the account detail view
-            reverse_url = reverse(
-                'accounts.views.account_detail',
-                args=(account.uuid,)
-            )
-            return HttpResponseRedirect(reverse_url)
-        else:
-            # if the form isn't valid, still fetch the account so it can be passed to the template
-            account = form.cleaned_data['account']
+            if request.is_ajax():
+                return render(request,
+                              'contacts/contact_item_view.html',
+                              {'account':account, 'contact':contact}
+                )
+            else:
+                reverse_url = reverse(
+                    'crmapp.accounts.views.account_detail',
+                    args=(account.uuid,)
+                )
+                return HttpResponseRedirect(reverse_url)
     else:
         form = ContactForm(instance=contact)
 
-    # this is used to fetch the account if it exists as a URL parameter
     if request.GET.get('account', ''):
         account = Account.objects.get(id=request.GET.get('account', ''))
-
 
     variables = {
         'form': form,
@@ -65,6 +65,9 @@ def contact_cru(request, uuid=None, account=None):
         'account': account
     }
 
-    template = 'contacts/contact_cru.html'
+    if request.is_ajax():
+        template = 'contacts/contact_item_form.html'
+    else:
+        template = 'contacts/contact_cru.html'
 
     return render(request, template, variables)
