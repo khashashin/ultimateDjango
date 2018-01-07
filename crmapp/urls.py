@@ -53,5 +53,5 @@ urlpatterns = [
     re_path(r'^contact/new/$', contact_cru, name='contact_new'),
     re_path(r'^contact/(?P<pk>[\w-]+)/delete/$', ContactDelete.as_view(), name='contact_delete'),
     # Communication related URLs
-    re_path(r'^comm/(?P<uuid>[\w-]+)/', include(communications.urls)),
+    re_path(r'^comm/(?P<uuid>[\w-]+)/', include('communications.urls')),
 ]
