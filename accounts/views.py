@@ -10,6 +10,7 @@ from .models import Account
 from .forms import AccountForm
 from contacts.models import Contact
 from communications.models import Communication
+from communications.forms import CommunicationForm
 
 
 # Create your views here.
@@ -48,10 +49,13 @@ def account_detail(request, uuid):
     communications = Communication.objects.filter(
         account=account).order_by('-created_on')
 
+    form = CommunicationForm()
+
     variables = {
         'account': account,
         'contacts': contacts,
         'communications': communications,
+        'form': form
     }
 
     return render(request, 'accounts/account_detail.html', variables)
