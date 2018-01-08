@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.urls import reverse
@@ -6,6 +6,7 @@ from django.urls import reverse
 from .models import Communication
 from .forms import CommunicationForm
 from accounts.views import account_detail
+from accounts.models import Account
 
 # Create your views here.
 
@@ -19,10 +20,17 @@ def comm_detail(request, uuid):
     return render(request, 'communications/comm_detail.html', {'comm':comm})
 
 @login_required()
-def comm_cru(request):
+def comm_cru(request, uuid=None, account=None):
+
+    if uuid:
+        comm = get_object_or_404(Communication, uuid=uuid)
+        if comm.owner != request.user:
+            return HttpResponseForbidden()
+    else:
+        comm = Communication(owner=request.user)
 
     if request.POST:
-        form = CommunicationForm(request.POST)
+        form = CommunicationForm(request.POST, instance=comm)
         if form.is_valid():
             # make sure the user owns the account
             account = form.cleaned_data['account']
@@ -38,11 +46,20 @@ def comm_cru(request):
                 args=(account.uuid,)
             )
             return HttpResponseRedirect(reverse_url)
+        else:
+            # if the form isn't valid, still fetch the account so it can be passed to the template
+            account = form.cleaned_data['account']
     else:
-        form = CommunicationForm()
+        form = CommunicationForm(instance=comm)
+
+    # this is used to fetch the account if it exists as a URL parameter
+    if request.GET.get('account', ''):
+        account = Account.objects.get(id=request.GET.get('account', ''))
 
     variables = {
         'form': form,
+        'comm':comm,
+        'account': account
     }
 
     template = 'communications/comm_cru.html'
