@@ -101,6 +101,6 @@ class CommDelete(CommMixin, DeleteView):
 
     def get_success_url(self):
         return reverse(
-            'crmapp.accounts.views.account_detail',
+            account_detail,
             args=(self.account.uuid,)
         )
